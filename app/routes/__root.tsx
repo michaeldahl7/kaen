@@ -1,0 +1,54 @@
+import { Outlet, ScrollRestoration, createRootRoute } from "@tanstack/react-router";
+import { Body, Head, Html, Meta, Scripts } from "@tanstack/start";
+import { seo } from "../lib/seo";
+import { getSession } from "~/server/functions";
+// @ts-expect-error
+import appCss from "~/styles/app.css?url";
+
+export const Route = createRootRoute({
+  meta: () => [
+    {
+      charSet: "utf-8",
+    },
+    {
+      name: "viewport",
+      content: "width=device-width, initial-scale=1",
+    },
+    {
+      title: "TanStarter",
+    },
+    ...seo({
+      title: "kaen",
+      description: "Gotta figure out what kaen is",
+    }),
+  ],
+  component: RootComponent,
+  links: () => [{ rel: "stylesheet", href: appCss }],
+  beforeLoad: async () => {
+    const data = await getSession();
+    return data;
+  },
+});
+
+function RootComponent() {
+  return (
+    <RootDocument>
+      <Outlet />
+    </RootDocument>
+  );
+}
+
+function RootDocument({ children }: { children: React.ReactNode }) {
+  return (
+    <Html>
+      <Head>
+        <Meta />
+      </Head>
+      <Body>
+        {children}
+        <ScrollRestoration />
+        <Scripts />
+      </Body>
+    </Html>
+  );
+}

@@ -1,0 +1,415 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.kaen_users": {
+      "name": "kaen_users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {
+    "public.role": {
+      "name": "role",
+      "values": [
+        "member",
+        "admin"
+      ],
+      "schema": "public"
+    },
+    "public.type": {
+      "name": "type",
+      "values": [
+        "email",
+        "google",
+        "github",
+        "facebook"
+      ],
+      "schema": "public"
+    }
+  },
+  "schemas": {},
+  "sequences": {
+    "public.thurba_accounts_id_seq": {
+      "name": "thurba_accounts_id_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_accounts_userId_seq": {
+      "name": "thurba_accounts_userId_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_events_id_seq": {
+      "name": "thurba_events_id_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_events_groupId_seq": {
+      "name": "thurba_events_groupId_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_following_id_seq": {
+      "name": "thurba_following_id_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_following_userId_seq": {
+      "name": "thurba_following_userId_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_following_foreignUserId_seq": {
+      "name": "thurba_following_foreignUserId_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_group_id_seq": {
+      "name": "thurba_group_id_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_group_userId_seq": {
+      "name": "thurba_group_userId_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_invites_id_seq": {
+      "name": "thurba_invites_id_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_invites_groupId_seq": {
+      "name": "thurba_invites_groupId_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_magic_links_id_seq": {
+      "name": "thurba_magic_links_id_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_membership_id_seq": {
+      "name": "thurba_membership_id_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_membership_userId_seq": {
+      "name": "thurba_membership_userId_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_membership_groupId_seq": {
+      "name": "thurba_membership_groupId_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_newsletter_id_seq": {
+      "name": "thurba_newsletter_id_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_notifications_id_seq": {
+      "name": "thurba_notifications_id_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_notifications_userId_seq": {
+      "name": "thurba_notifications_userId_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_notifications_groupId_seq": {
+      "name": "thurba_notifications_groupId_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_posts_id_seq": {
+      "name": "thurba_posts_id_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_posts_userId_seq": {
+      "name": "thurba_posts_userId_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_posts_groupId_seq": {
+      "name": "thurba_posts_groupId_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_profile_id_seq": {
+      "name": "thurba_profile_id_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_profile_userId_seq": {
+      "name": "thurba_profile_userId_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_replies_id_seq": {
+      "name": "thurba_replies_id_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_replies_userId_seq": {
+      "name": "thurba_replies_userId_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_replies_postId_seq": {
+      "name": "thurba_replies_postId_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_replies_groupId_seq": {
+      "name": "thurba_replies_groupId_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_reset_tokens_id_seq": {
+      "name": "thurba_reset_tokens_id_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_reset_tokens_userId_seq": {
+      "name": "thurba_reset_tokens_userId_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_session_userId_seq": {
+      "name": "thurba_session_userId_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_subscriptions_id_seq": {
+      "name": "thurba_subscriptions_id_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_subscriptions_userId_seq": {
+      "name": "thurba_subscriptions_userId_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_user_id_seq": {
+      "name": "thurba_user_id_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_verify_email_tokens_id_seq": {
+      "name": "thurba_verify_email_tokens_id_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    },
+    "public.thurba_verify_email_tokens_userId_seq": {
+      "name": "thurba_verify_email_tokens_userId_seq",
+      "schema": "public",
+      "startWith": "1",
+      "minValue": "1",
+      "maxValue": "2147483647",
+      "increment": "1",
+      "cycle": false,
+      "cache": "1"
+    }
+  },
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {}
+  }
+}
