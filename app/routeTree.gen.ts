@@ -75,11 +75,62 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({
-  IndexRoute,
-  DashboardRoute: DashboardRoute.addChildren({ DashboardIndexRoute }),
-  SigninRoute,
-})
+interface DashboardRouteChildren {
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
+interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/signin': typeof SigninRoute
+  '/dashboard/': typeof DashboardIndexRoute
+}
+
+interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/signin': typeof SigninRoute
+  '/dashboard': typeof DashboardIndexRoute
+}
+
+interface FileRoutesById {
+  '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/signin': typeof SigninRoute
+  '/dashboard/': typeof DashboardIndexRoute
+}
+
+interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '/' | '/dashboard' | '/signin' | '/dashboard/'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/' | '/signin' | '/dashboard'
+  id: '/' | '/dashboard' | '/signin' | '/dashboard/'
+  fileRoutesById: FileRoutesById
+}
+
+interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
+  SigninRoute: typeof SigninRoute
+}
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  DashboardRoute: DashboardRouteWithChildren,
+  SigninRoute: SigninRoute,
+}
+
+export const routeTree = rootRoute
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* prettier-ignore-end */
 

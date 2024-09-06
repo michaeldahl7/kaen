@@ -2,6 +2,7 @@ import { Outlet, ScrollRestoration, createRootRoute } from "@tanstack/react-rout
 import { Body, Head, Html, Meta, Scripts } from "@tanstack/start";
 import { seo } from "../lib/seo";
 import { getSession } from "~/server/functions";
+import { ThemeProvider } from "~/components/theme-provider";
 // @ts-expect-error
 import appCss from "~/styles/app.css?url";
 
@@ -23,7 +24,27 @@ export const Route = createRootRoute({
     }),
   ],
   component: RootComponent,
-  links: () => [{ rel: "stylesheet", href: appCss }],
+  links: () => [
+    { rel: "stylesheet", href: appCss },    
+  {
+    rel: 'apple-touch-icon',
+    sizes: '180x180',
+    href: '/apple-touch-icon.png',
+  },
+  {
+    rel: 'icon',
+    type: 'image/png',
+    sizes: '32x32',
+    href: '/favicon-32x32.png',
+  },
+  {
+    rel: 'icon',
+    type: 'image/png',
+    sizes: '16x16',
+    href: '/favicon-16x16.png',
+  },
+  { rel: 'manifest', href: '/site.webmanifest', color: '#fffff' },
+  { rel: 'icon', href: '/favicon.ico' },],
   beforeLoad: async () => {
     const data = await getSession();
     return data;
@@ -45,7 +66,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <Meta />
       </Head>
       <Body>
-        {children}
+      <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+          {children}
+        </ThemeProvider>
         <ScrollRestoration />
         <Scripts />
       </Body>
