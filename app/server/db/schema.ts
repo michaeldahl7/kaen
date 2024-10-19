@@ -1,12 +1,12 @@
-import { pgEnum, integer, text, timestamp, pgTableCreator } from "drizzle-orm/pg-core";
+import { pgEnum, integer, text, timestamp, pgTableCreator, serial } from "drizzle-orm/pg-core";
 
 // const createTable = pgTableCreator((name) => `kaen_${name}`);
 const pgTable = pgTableCreator((name) => `kaen_${name}`);
 
 export const accountTypeEnum = pgEnum("type", ["email", "google", "github", "facebook"]);
 
-export const users = pgTable("users", {
-  id: integer("id").primaryKey().generatedAlwaysAsIdentity({ startWith: 1 }),
+export const userTable = pgTable("users", {
+  id: serial("id").primaryKey(),
   name: text("name"),
   firstName: text("first_name"),
   lastName: text("last_name"),
@@ -20,22 +20,22 @@ export const users = pgTable("users", {
   termsAcceptedAt: timestamp("terms_accepted_at"),
 });
 
-export const accounts = pgTable("accounts", {
-  id: integer("id").primaryKey().generatedAlwaysAsIdentity({ startWith: 1 }),
+export const accountTable = pgTable("accounts", {
+  id: serial("id").primaryKey(),
   userId: integer("userId")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+    .references(() => userTable.id, { onDelete: "cascade" }),
   accountType: accountTypeEnum("accountType").notNull(),
   githubId: text("githubId").unique(),
   googleId: text("googleId").unique(),
   facebookId: text("facebookId").unique(),
 });
 
-export const sessions = pgTable("sessions", {
+export const sessionTable = pgTable("sessions", {
   id: text("id").primaryKey(),
   userId: integer("userId")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+    .references(() => userTable.id, { onDelete: "cascade" }),
   expiresAt: timestamp("expires_at", {
     withTimezone: true,
     mode: "date",
@@ -44,5 +44,8 @@ export const sessions = pgTable("sessions", {
 
 // TODO: tables for payment gateways
 
-export type User = typeof users.$inferSelect;
+export type User = typeof userTable.$inferSelect;
+export type Account = typeof accountTable.$inferSelect;
+export type Session = typeof sessionTable.$inferSelect;
+
 // export type Profile = typeof profiles.$inferSelect;

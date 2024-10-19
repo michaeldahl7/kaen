@@ -1,6 +1,6 @@
 {
-  "id": "a49424ac-9deb-4c3e-9136-a668f8574608",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "5dd31730-f33c-4191-9e68-ed41b59a8b46",
+  "prevId": "3440c090-2494-4359-8183-4932c40566c2",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -10,20 +10,9 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "serial",
           "primaryKey": true,
-          "notNull": true,
-          "identity": {
-            "type": "always",
-            "name": "kaen_accounts_id_seq",
-            "schema": "public",
-            "increment": "1",
-            "startWith": "1",
-            "minValue": "1",
-            "maxValue": "2147483647",
-            "cache": "1",
-            "cycle": false
-          }
+          "notNull": true
         },
         "userId": {
           "name": "userId",
@@ -146,20 +135,9 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "serial",
           "primaryKey": true,
-          "notNull": true,
-          "identity": {
-            "type": "always",
-            "name": "kaen_users_id_seq",
-            "schema": "public",
-            "increment": "1",
-            "startWith": "1",
-            "minValue": "1",
-            "maxValue": "2147483647",
-            "cache": "1",
-            "cycle": false
-          }
+          "notNull": true
         },
         "name": {
           "name": "name",

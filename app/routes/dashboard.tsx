@@ -1,6 +1,6 @@
 import { Link, Outlet, createFileRoute, redirect, useRouter, useLoaderData } from "@tanstack/react-router";
 import { Button } from "~/components/ui/button";
-import { users } from "~/server/db/schema";
+import { userTable } from "~/server/db/schema";
 
 export const Route = createFileRoute("/dashboard")({
   component: DashboardLayout,

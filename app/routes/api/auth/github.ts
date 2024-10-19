@@ -1,14 +1,17 @@
 import { createAPIFileRoute } from "@tanstack/start/api";
-import { generateState } from "arctic";
+// import { generateState } from "arctic";
 import { setCookie, setHeader } from "vinxi/http";
-
-import { github } from "~/server/auth";
+import { github } from "~/server/oauth";
+import { generateState } from "arctic";
 
 export const Route = createAPIFileRoute("/api/auth/github")({
   GET: async () => {
+
+    
     const state = generateState();
 
     const url = github.createAuthorizationURL(state, ["user:email"]);
+    // const tokens: GitHubTokens = await github.validateAuthorizationCode(code);
 
     setCookie("github_oauth_state", state, {
       path: "/",

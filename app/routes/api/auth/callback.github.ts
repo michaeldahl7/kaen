@@ -2,9 +2,10 @@ import { createAPIFileRoute } from "@tanstack/start/api";
 import { OAuth2RequestError } from "arctic";
 import { and, eq } from "drizzle-orm";
 import { parseCookies } from "vinxi/http";
-import { github, lucia } from "~/server/auth";
+import { createSession, generateSessionToken } from "~/server/session";
+import { github } from "~/server/oauth";
 import { db } from "~/server/db";
-import { accounts, users } from "~/server/db/schema";
+import { accountTable, userTable } from "~/server/db/schema";
 
 interface Email {
   email: string;
@@ -41,7 +42,7 @@ export const Route = createAPIFileRoute("/api/auth/callback/github")({
 
       const userId = await getOrCreateUser(githubUser);
 
-      const session = await lucia.createSession(userId, {});
+      const session = await createSession(userId, {});
       const sessionCookie = lucia.createSessionCookie(session.id);
 
       return new Response(null, {
@@ -87,8 +88,8 @@ function getPrimaryEmail(emails: Email[]): string {
 }
 
 async function getOrCreateUser(githubUser: GitHubUser): Promise<number> {
-  const existingAccount = await db.query.accounts.findFirst({
-    where: eq(accounts.githubId, githubUser.id),
+  const existingAccount = await db.query.accountTable.findFirst({
+    where: eq(accountTable.githubId, githubUser.id)
   });
 
   if (existingAccount) {
@@ -112,13 +113,13 @@ async function getOrCreateUser(githubUser: GitHubUser): Promise<number> {
 }
 
 async function getUserByEmail(email: string) {
-  return db.query.users.findFirst({
-    where: eq(users.email, email),
+  return db.query.userTable.findFirst({
+    where: eq(userTable.email, email),
   });
 }
 
 async function createUser(email: string, name: string, avatarUrl: string) {
-  const [user] = await db.insert(users).values({ email, name, avatarUrl }).returning();
+  const [user] = await db.insert(userTable).values({ email, name, avatarUrl }).returning();
   if (!user) {
     throw new Error("Failed to create user");
   }
@@ -127,7 +128,7 @@ async function createUser(email: string, name: string, avatarUrl: string) {
 
 async function createAccountViaGithub(userId: number, githubId: string) {
   await db
-    .insert(accounts)
+    .insert(accountTable)
     .values({
       userId,
       accountType: "github",
