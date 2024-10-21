@@ -1,9 +1,13 @@
 import { createAPIFileRoute } from "@tanstack/start/api";
-import { OAuth2RequestError } from "arctic";
+import { OAuth2RequestError, type OAuth2Tokens } from "arctic";
 import { and, eq } from "drizzle-orm";
 import { parseCookies } from "vinxi/http";
-import { createSession, generateSessionToken } from "~/server/session";
-import { github } from "~/server/oauth";
+import {
+  createSession,
+  generateSessionToken,
+  setSessionTokenCookie,
+} from "~/server/auth";
+import { github } from "~/server/auth";
 import { db } from "~/server/db";
 import { accountTable, userTable } from "~/server/db/schema";
 
@@ -35,30 +39,37 @@ export const Route = createAPIFileRoute("/api/auth/callback/github")({
     if (!code || !state || !storedState || state !== storedState) {
       return new Response(null, { status: 400 });
     }
-
+    //  const userId = await getOrCreateUser(githubUser);
+    let tokens: OAuth2Tokens;
     try {
-      const tokens = await github.validateAuthorizationCode(code);
-      const githubUser = await fetchGitHubUserData(tokens.accessToken());
-
-      const userId = await getOrCreateUser(githubUser);
-
-      const session = await createSession(userId, {});
-      const sessionCookie = lucia.createSessionCookie(session.id);
-
-      return new Response(null, {
-        status: 302,
-        headers: {
-          Location: "/",
-          "Set-Cookie": sessionCookie.serialize(),
-        },
-      });
+      tokens = await github.validateAuthorizationCode(code);
     } catch (e) {
-      console.error(e);
-      if (e instanceof OAuth2RequestError) {
-        return new Response(null, { status: 400 });
-      }
-      return new Response(null, { status: 500 });
+      // Invalid code or client credentials
+      return new Response(null, {
+        status: 400,
+      });
     }
+    const githubUserResponse = await fetch("https://api.github.com/user", {
+      headers: {
+        Authorization: `Bearer ${tokens.accessToken()}`,
+      },
+    });
+    const githubUser = await githubUserResponse.json();
+    // const githubUserId = githubUser.id;
+    // const githubUsername = githubUser.login;
+
+    // TODO: Replace this with your own DB query.
+    const userId = await getOrCreateUser(githubUser);
+
+    const sessionToken = generateSessionToken();
+    const session = await createSession(sessionToken, userId);
+    setSessionTokenCookie(sessionToken, session.expiresAt);
+    return new Response(null, {
+      status: 302,
+      headers: {
+        Location: "/",
+      },
+    });
   },
 });
 
@@ -89,7 +100,7 @@ function getPrimaryEmail(emails: Email[]): string {
 
 async function getOrCreateUser(githubUser: GitHubUser): Promise<number> {
   const existingAccount = await db.query.accountTable.findFirst({
-    where: eq(accountTable.githubId, githubUser.id)
+    where: eq(accountTable.githubId, githubUser.id),
   });
 
   if (existingAccount) {
@@ -119,7 +130,10 @@ async function getUserByEmail(email: string) {
 }
 
 async function createUser(email: string, name: string, avatarUrl: string) {
-  const [user] = await db.insert(userTable).values({ email, name, avatarUrl }).returning();
+  const [user] = await db
+    .insert(userTable)
+    .values({ email, name, avatarUrl })
+    .returning();
   if (!user) {
     throw new Error("Failed to create user");
   }

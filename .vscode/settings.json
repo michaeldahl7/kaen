@@ -10,7 +10,7 @@
 		"**/out": true,
 		"**/build": true,
 		"**/dist": true,
-		"**/node_modules": true,
+		// "**/node_modules": true,
 		"**/.turbo": true,
 		"**/.cache": true,
 

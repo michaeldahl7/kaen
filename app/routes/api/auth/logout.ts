@@ -1,12 +1,12 @@
 import { createAPIFileRoute } from "@tanstack/start/api";
-import { parseCookies, setCookie, setHeader } from "vinxi/http";
-import { validateSessionToken } from "~/server/session";
+import { setHeader, getCookie, deleteCookie } from "vinxi/http";
+import { invalidateSession, validateSessionToken } from "~/server/auth";
 
 export const Route = createAPIFileRoute("/api/auth/logout")({
   POST: async () => {
     setHeader("Location", "/");
 
-    const token = parseCookies().session; 
+    const token = getCookie("session");
     if (!token) {
       return new Response(null, {
         status: 401,
@@ -21,13 +21,8 @@ export const Route = createAPIFileRoute("/api/auth/logout")({
       });
     }
 
-    setCookie("session", "", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 0,
-      path: "/"
-    })
+    await invalidateSession(session.id);
+    deleteCookie("session");
 
     return new Response(null, {
       status: 302,

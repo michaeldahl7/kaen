@@ -1,0 +1,1 @@
+2024-09-07T02:50:17.513190Z  WARN turborepo_filewatch: encountered error watching filesystem enumerating recursive watch: IO error for operation on /home/dahl/projects/kaen/node_modules/.pnpm/copy-anything@3.0.5/node_modules/copy-anything_tmp_29312/dist/cjs: No such file or directory (os error 2)

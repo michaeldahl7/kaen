@@ -10,22 +10,16 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const { user } = Route.useLoaderData();
+  const { user } = Route.useRouteContext();
 
   return (
     <div className="flex flex-col gap-4 p-6">
       <div className="flex justify-between">
         <h1 className="text-4xl font-bold">TanStarter</h1>
-      <ModeToggle/>
+        <ModeToggle />
       </div>
-      
-      
-      <div className="flex items-center gap-2">
-        This is an unprotected page:
-      <div>
 
-      </div>
-      </div>
+      <div className="flex items-center gap-2">This is an unprotected page:</div>
 
       {user ? (
         <div className="flex flex-col gap-2">
@@ -33,10 +27,6 @@ function Home() {
           <Button type="button" asChild className="w-fit" size="lg">
             <Link to="/dashboard">Go to Dashboard</Link>
           </Button>
-          <div>
-            More data:
-            <pre>{JSON.stringify(user, null, 2)}</pre>
-          </div>
 
           <form method="POST" action="/api/auth/logout">
             <Button type="submit" className="w-fit" variant="destructive" size="lg">

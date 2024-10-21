@@ -1,6 +1,5 @@
-import { Link, Outlet, createFileRoute, redirect, useRouter, useLoaderData } from "@tanstack/react-router";
+import { Link, Outlet, createFileRoute, redirect } from "@tanstack/react-router";
 import { Button } from "~/components/ui/button";
-import { userTable } from "~/server/db/schema";
 
 export const Route = createFileRoute("/dashboard")({
   component: DashboardLayout,
@@ -9,19 +8,19 @@ export const Route = createFileRoute("/dashboard")({
       throw redirect({ to: "/signin" });
     }
   },
-  loader: ({context}) => {
-    return context.user
-  }
+  loader: ({ context }) => {
+    return context.user;
+  },
 });
 
 function DashboardLayout() {
   const user = Route.useLoaderData();
   return (
     <div className="flex flex-col gap-4 p-4">
-      <h1 className="text-4xl font-bold">Hello {user?.id}</h1>
+      <h1 className="text-4xl font-bold">Hello {user?.name}</h1>
       <div className="flex items-center gap-2">
         This is a protected layout:
-        <pre className="p-1 border rounded-md bg-slate-50">routes/dashboard.tsx</pre>
+        <pre className="p-1 border rounded-md">routes/dashboard.tsx</pre>
       </div>
 
       <Button type="button" asChild className="w-fit" size="lg">

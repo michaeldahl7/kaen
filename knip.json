@@ -1,0 +1,4 @@
+{
+  "entry": ["app.config.ts", "drizzle.config.ts", "app/**/*.{js,ts,jsx,tsx}"],
+  "project": ["**/*.{js,ts}"]
+}
