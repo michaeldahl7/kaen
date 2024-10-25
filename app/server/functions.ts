@@ -17,12 +17,3 @@ export const getSession = createServerFn("GET", async () => {
   setSessionTokenCookie(token, session.expiresAt);
   return json({ session, user });
 });
-
-// if (result.session?.fresh) {
-//   const sessionCookie = lucia.createSessionCookie(result.session.id);
-//   setCookie(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-// }
-// if (!result.session) {
-//   const sessionCookie = lucia.createBlankSessionCookie();
-//   setCookie(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-// }

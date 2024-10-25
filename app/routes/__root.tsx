@@ -1,7 +1,6 @@
 import {
   Outlet,
   ScrollRestoration,
-  createRootRoute,
   createRootRouteWithContext,
 } from "@tanstack/react-router";
 // import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -12,6 +11,7 @@ import { seo } from "../lib/seo";
 import { getSession } from "~/server/functions";
 import { ThemeProvider } from "~/components/theme-provider";
 import React, { Suspense } from "react";
+
 // @ts-ignore
 import appCss from "~/styles/app.css?url";
 import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary";
